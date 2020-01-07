@@ -166,9 +166,13 @@ const PostView = ({
                 {comments.length > 1
                   ? comments.map((value: any, key: any) => {
                       return key <= 2 ? (
-                        <CommentBlock collapse={false} data={value} />
+                        <CommentBlock key={key} collapse={false} data={value} />
                       ) : (
-                        <CommentBlock collapse={collapse} data={value} />
+                        <CommentBlock
+                          key={key}
+                          collapse={collapse}
+                          data={value}
+                        />
                       );
                     })
                   : null}

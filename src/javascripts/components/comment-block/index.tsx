@@ -10,7 +10,7 @@ import './style.scss';
 import ProfileImage from '../../../assets/images/matt.jpg';
 
 // semantic ui
-import {Comment} from 'semantic-ui-react';
+import {Comment, Popup} from 'semantic-ui-react';
 
 // interface
 interface IProps {
@@ -45,19 +45,41 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
     copy('https://www.reddit.com' + permalink);
   };
 
-  const handleDisplayReplies = (replies: any) => {
-    const repliesList: any = [];
-    console.log(replies, replies.length);
-    if (replies) {
-      if (replies.length !== 0 || replies.length !== undefined) {
-        replies.map((r: any, k: any) => {
-          repliesList.push(r.body);
-          repliesList.push(handleDisplayReplies(r));
-        });
-      }
+  const handleDisplayReplies = (data: any) => {
+    const comment: any = [];
+    if (data.length > 0) {
+      console.log(data);
+      data.map((datar: any, keyr: any) => {
+        comment.push(
+          <Comment.Group collapsed={!viewReplies} key={datar.id + keyr}>
+            <Comment>
+              <Comment.Avatar as="a" src={ProfileImage} />
+              <Comment.Content>
+                <Comment.Author as="a">
+                  {datar.author.name} - {datar.score} points
+                </Comment.Author>
+                <Comment.Metadata>
+                  <span>{handleTimeStamp(datar.created_utc)}</span>
+                </Comment.Metadata>
+                <Comment.Text>{ReactHtmlParser(datar.body_html)}</Comment.Text>
+                <Comment.Actions>
+                  <Popup
+                    content="Click to Copy Link"
+                    trigger={
+                      <a onClick={() => handleShareComment(datar.permalink)}>
+                        Share
+                      </a>
+                    }
+                  />
+                </Comment.Actions>
+              </Comment.Content>
+              {handleDisplayReplies(datar.replies)}
+            </Comment>
+          </Comment.Group>
+        );
+      });
     }
-    console.log(repliesList);
-    return repliesList;
+    return comment;
   };
 
   const handleViewReplies = () => {
@@ -82,13 +104,21 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
               </Comment.Metadata>
               <Comment.Text>{ReactHtmlParser(data.body_html)}</Comment.Text>
               <Comment.Actions>
-                <a onClick={() => handleShareComment(data.permalink)}>Share</a>
+                <Popup
+                  content="Click to Copy Link"
+                  trigger={
+                    <a onClick={() => handleShareComment(data.permalink)}>
+                      Share
+                    </a>
+                  }
+                />
               </Comment.Actions>
             </Comment.Content>
+
             {data.replies.length > 0
               ? data.replies.map((datar: any, keyr: any) => {
                   return keyr === 0 ? (
-                    <Comment.Group key={keyr} collapsed={false}>
+                    <Comment.Group key={datar.id + keyr} collapsed={false}>
                       <Comment>
                         <Comment.Avatar as="a" src={ProfileImage} />
                         <Comment.Content>
@@ -102,19 +132,28 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
                             {ReactHtmlParser(datar.body_html)}
                           </Comment.Text>
                           <Comment.Actions>
-                            <a
-                              onClick={() =>
-                                handleShareComment(datar.permalink)
+                            <Popup
+                              content="Click to Copy Link"
+                              trigger={
+                                <a
+                                  onClick={() =>
+                                    handleShareComment(datar.permalink)
+                                  }
+                                >
+                                  Share
+                                </a>
                               }
-                            >
-                              Share
-                            </a>
+                            />
                           </Comment.Actions>
                         </Comment.Content>
+                        {handleDisplayReplies(datar.replies)}
                       </Comment>
                     </Comment.Group>
                   ) : (
-                    <Comment.Group collapsed={!viewReplies} key={keyr}>
+                    <Comment.Group
+                      collapsed={!viewReplies}
+                      key={datar.id + keyr}
+                    >
                       <Comment>
                         <Comment.Avatar as="a" src={ProfileImage} />
                         <Comment.Content>
@@ -128,15 +167,22 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
                             {ReactHtmlParser(datar.body_html)}
                           </Comment.Text>
                           <Comment.Actions>
-                            <a
-                              onClick={() =>
-                                handleShareComment(datar.permalink)
+                            <Popup
+                              content="Click to Copy Link"
+                              trigger={
+                                <a
+                                  onClick={() =>
+                                    handleShareComment(datar.permalink)
+                                  }
+                                >
+                                  Share
+                                </a>
                               }
-                            >
-                              Share
-                            </a>
+                            />
                           </Comment.Actions>
                         </Comment.Content>
+                        {handleDisplayReplies(datar.replies)}
+                        {/* {commentlist} */}
                       </Comment>
                     </Comment.Group>
                   );
