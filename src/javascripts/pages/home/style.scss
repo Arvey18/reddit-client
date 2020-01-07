@@ -1,0 +1,24 @@
+@import '../../../stylesheets/variables.scss';
+
+#home {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $gray;
+
+  h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+  }
+
+  p {
+    margin-bottom: 30px;
+  }
+
+  img {
+    max-width: 40px;
+  }
+}

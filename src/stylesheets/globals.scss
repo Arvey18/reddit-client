@@ -1,0 +1,26 @@
+html,
+body {
+  position: relative;
+  color: $black;
+  margin: 0px;
+  padding: 0px;
+  font-family: $font;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+}
+
+* {
+  outline: none !important;
+}
+
+.button {
+  background: $orange !important;
+  color: $white !important;
+}
+
+.center-content {
+  text-align: center;
+}

@@ -1,0 +1,141 @@
+@import '../../../stylesheets/variables.scss';
+
+#dashboard {
+  position: relative;
+  width: 100%;
+
+  .dashboard-header {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    background: $white;
+    border-bottom: 1px solid #edeff1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    padding: 8px 20px;
+    z-index: 9999;
+
+    &>.one {
+      flex: 1;
+    }
+
+    .dashboard-header-left {
+      display: flex;
+      align-items: center;
+
+      .sort-filter {
+        margin-left: 30px;
+
+        .sort-text {
+          margin-right: 10px;
+          font-size: 10px;
+          font-weight: 700;
+          color: #7c7c7c;
+          text-transform: uppercase;
+        }
+
+        .selected {
+          font-weight: 700;
+        }
+
+        .item {
+          i {
+            color: $orange;
+          }
+        }
+
+        .text {
+          margin-right: 5px;
+        }
+      }
+
+      .logo {
+        max-width: 40px;
+        max-height: 38px;
+        margin-right: 8px;
+      }
+
+      .logo-text {
+        max-width: 57px;
+        max-height: 18px;
+      }
+
+      .dashboard-title {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0px 0px 0px 16px;
+      }
+    }
+
+    .button {
+      border-radius: 100px;
+      height: 40px;
+    }
+
+    .back-icon {
+      // color: $orange;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 100px;
+    }
+  }
+
+  .dashboard-body {
+    position: relative;
+    min-height: 100vh;
+    background-color: $gray;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 100px;
+
+    .dashboard-post-container {
+      position: relative;
+      padding: 30px;
+      background: $white;
+      border-radius: 10px;
+      min-height: 100vh;
+      width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 100px;
+
+      .card-header {
+        margin-bottom: 10px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        height: 60px;
+      }
+
+      .card-preview {
+        height: 300px;
+        background: $black;
+
+        iframe {
+          max-width: 100%;
+          max-height: 100%;
+        }
+
+        .image-preview {
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+        }
+
+        .thread-post {
+          height: 100%;
+          width: 100%;
+          background: #f7f7f7;
+          color: $orange;
+          font-size: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
