@@ -1,8 +1,11 @@
 import React, {ReactElement, SyntheticEvent} from 'react';
 import {connect} from 'react-redux';
-import {GET_POSTS} from '../../actions/post';
+import {GET_POSTS, GET_POST} from '../../actions/post';
 import ReactHtmlParser from 'react-html-parser';
 import {Redirect} from 'react-router-dom';
+
+// components
+import PostView from '../../components/post-view';
 
 // styles
 import './style.scss';
@@ -39,6 +42,8 @@ const Dashboard = (props: any): ReactElement => {
 
   //use states
   const [sortPost, setSortPost] = React.useState('Hot');
+  const [showPost, setShowPost] = React.useState(false);
+  const [showPostID, setShowPostID] = React.useState('');
 
   // use effects
   React.useEffect(() => {
@@ -71,6 +76,11 @@ const Dashboard = (props: any): ReactElement => {
     props.history.push('/');
   };
 
+  const handleViewPost = (id: string, show: boolean) => {
+    setShowPost(show);
+    setShowPostID(id);
+  };
+
   const handleTimeStamp = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
     const hours = date.getHours();
@@ -92,6 +102,11 @@ const Dashboard = (props: any): ReactElement => {
   return (
     <div id="dashboard">
       {entered === 'false' ? <Redirect to="/" /> : null}
+      <PostView
+        handleView={(id: string, show: boolean) => handleViewPost(id, show)}
+        show={showPost}
+        id={showPostID}
+      />
       <div className="dashboard-header">
         <div className="one dashboard-header-left">
           <img src={Logo} alt="logo" className="logo" />
@@ -118,6 +133,7 @@ const Dashboard = (props: any): ReactElement => {
           <Grid columns={3}>
             {props.posts.length > 1
               ? props.posts.map((value: any, key: number) => {
+                  // console.log(value);
                   return (
                     <Grid.Column key={key}>
                       <Transition
@@ -172,7 +188,10 @@ const Dashboard = (props: any): ReactElement => {
                             )}
                           </div>
                           <Card.Content>
-                            <Card.Header className="card-header">
+                            <Card.Header
+                              onClick={() => handleViewPost(value.id, true)}
+                              className="card-header"
+                            >
                               {value.title}
                             </Card.Header>
                             <Card.Meta>
@@ -203,12 +222,13 @@ const Dashboard = (props: any): ReactElement => {
   );
 };
 
-const stateToProps = (data: any) => ({
-  posts: data.posts.posts,
+const stateToProps = ({posts}: any) => ({
+  posts: posts.posts,
 });
 
 const actionsToProps = (dispatch: any) => ({
   getPosts: (filter: string) => dispatch(GET_POSTS(filter)),
+  getPost: (id: string) => dispatch(GET_POST(id)),
 });
 
 export default connect(stateToProps, actionsToProps)(Dashboard);

@@ -1,0 +1,115 @@
+@import '../../../stylesheets/variables.scss';
+
+#postView {
+  position: fixed;
+  top: 52px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  background: $black;
+  height: calc(100vh - 52px);
+  display: inline-block;
+  padding-top: 53px;
+  padding-bottom: 53px;
+  overflow-y: auto;
+
+  .view-comments-button,
+  .view-replies {
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
+  .view-replies {
+    margin-bottom: 30px;
+    margin-left: 20px;
+  }
+
+  .post-view-data {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .post-view-data-details {
+      background: $white;
+      border-radius: 10px;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+
+      .close-modal {
+        position: absolute;
+        right: 20px;
+        top: 30px;
+        cursor: pointer;
+        color: $orange;
+        font-size: 22px;
+      }
+
+      .thread-post {
+        height: 400px;
+        width: 100%;
+        background: #f7f7f7;
+        color: $orange;
+        font-size: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .preview-video {
+        iframe {
+          width: 100% !important;
+          min-height: 500px;
+        }
+      }
+
+      .title {
+        margin-bottom: 0px;
+        font-size: 20px;
+        max-width: 80%;
+        margin-top: 0px;
+      }
+
+      .author {
+        color: rgba(0, 0, 0, 0.68);
+        font-size: 12px;
+        margin-bottom: 40px;
+      }
+
+      .post-view-data-detail-footer {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        margin-top: 20px;
+
+        &>div {
+          margin-right: 10px;
+        }
+      }
+
+      .preview-con {
+        text-align: center;
+
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+
+    .one {
+      flex: 1;
+    }
+
+    .two {
+      flex: 2;
+    }
+
+    .comments-container {
+      margin-top: 150px;
+    }
+  }
+}
