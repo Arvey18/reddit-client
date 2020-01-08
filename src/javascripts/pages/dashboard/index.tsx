@@ -1,6 +1,6 @@
-import React, {ReactElement, SyntheticEvent} from 'react';
+import React, {ReactElement} from 'react';
 import {connect} from 'react-redux';
-import {GET_POSTS, GET_POST} from '../../actions/post';
+import {GET_POSTS} from '../../actions/post';
 import ReactHtmlParser from 'react-html-parser';
 import {Redirect} from 'react-router-dom';
 
@@ -25,7 +25,15 @@ import {
   Icon,
 } from 'semantic-ui-react';
 
-const Dashboard = (props: any): ReactElement => {
+// interface
+interface IProps {
+  history: any;
+  getPosts: (filter: string) => void;
+  getPost: (id: string) => void;
+  posts: any;
+}
+
+const Dashboard = ({history, getPosts, posts}: IProps): ReactElement => {
   // variables
   const options = [
     {
@@ -51,29 +59,31 @@ const Dashboard = (props: any): ReactElement => {
   }, []);
 
   React.useEffect(() => {
-    const handleGetData = (sort: string) => {
-      let key = 'h';
-      if (sort === 'Top') {
-        key = 't';
-      } else if (sort === 'New') {
-        key = 'n';
-      } else if (sort === 'Controversial') {
-        key = 'con';
-      } else {
-        key = 'h';
-      }
-      props.getPosts(key);
-    };
-    handleGetData(sortPost);
+    handleGetdata(sortPost); // eslint-disable-next-line
   }, [sortPost]);
 
+  // custom functions
   const handleSortChange = (event: React.SyntheticEvent, data: any) => {
     setSortPost(data.value);
   };
 
+  const handleGetdata = (sort: string) => {
+    let key = 'h';
+    if (sort === 'Top') {
+      key = 't';
+    } else if (sort === 'New') {
+      key = 'n';
+    } else if (sort === 'Controversial') {
+      key = 'con';
+    } else {
+      key = 'h';
+    }
+    getPosts(key);
+  };
+
   const handleGoBack = () => {
     localStorage.setItem('entered', 'false');
-    props.history.push('/');
+    history.push('/');
   };
 
   const handleViewPost = (id: string, show: boolean) => {
@@ -131,9 +141,8 @@ const Dashboard = (props: any): ReactElement => {
       <div className="dashboard-body">
         <div className="dashboard-post-container">
           <Grid columns={3}>
-            {props.posts.length > 1
-              ? props.posts.map((value: any, key: number) => {
-                  // console.log(value);
+            {posts.length > 1
+              ? posts.map((value: any, key: number) => {
                   return (
                     <Grid.Column key={key}>
                       <Transition
@@ -204,10 +213,10 @@ const Dashboard = (props: any): ReactElement => {
                             </Card.Description>
                           </Card.Content>
                           <Card.Content extra>
-                            <a>
+                            <div className="action-button">
                               <Icon name="comments" />
                               {value.num_comments} Comments
-                            </a>
+                            </div>
                           </Card.Content>
                         </Card>
                       </Transition>
@@ -228,7 +237,6 @@ const stateToProps = ({posts}: any) => ({
 
 const actionsToProps = (dispatch: any) => ({
   getPosts: (filter: string) => dispatch(GET_POSTS(filter)),
-  getPost: (id: string) => dispatch(GET_POST(id)),
 });
 
 export default connect(stateToProps, actionsToProps)(Dashboard);

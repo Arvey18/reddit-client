@@ -48,9 +48,8 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
   const handleDisplayReplies = (data: any) => {
     const comment: any = [];
     if (data.length > 0) {
-      console.log(data);
       data.map((datar: any, keyr: any) => {
-        comment.push(
+        return comment.push(
           <Comment.Group collapsed={!viewReplies} key={datar.id + keyr}>
             <Comment>
               <Comment.Avatar as="a" src={ProfileImage} />
@@ -66,9 +65,12 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
                   <Popup
                     content="Click to Copy Link"
                     trigger={
-                      <a onClick={() => handleShareComment(datar.permalink)}>
+                      <div
+                        className="action-button"
+                        onClick={() => handleShareComment(datar.permalink)}
+                      >
                         Share
-                      </a>
+                      </div>
                     }
                   />
                 </Comment.Actions>
@@ -107,9 +109,12 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
                 <Popup
                   content="Click to Copy Link"
                   trigger={
-                    <a onClick={() => handleShareComment(data.permalink)}>
+                    <div
+                      className="action-button"
+                      onClick={() => handleShareComment(data.permalink)}
+                    >
                       Share
-                    </a>
+                    </div>
                   }
                 />
               </Comment.Actions>
@@ -135,13 +140,14 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
                             <Popup
                               content="Click to Copy Link"
                               trigger={
-                                <a
+                                <div
+                                  className="action-button"
                                   onClick={() =>
                                     handleShareComment(datar.permalink)
                                   }
                                 >
                                   Share
-                                </a>
+                                </div>
                               }
                             />
                           </Comment.Actions>
@@ -170,13 +176,14 @@ const CommentBlock = ({collapse, data}: IProps): ReactElement => {
                             <Popup
                               content="Click to Copy Link"
                               trigger={
-                                <a
+                                <div
+                                  className="action-button"
                                   onClick={() =>
                                     handleShareComment(datar.permalink)
                                   }
                                 >
                                   Share
-                                </a>
+                                </div>
                               }
                             />
                           </Comment.Actions>

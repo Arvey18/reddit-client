@@ -24,3 +24,11 @@ body {
 .center-content {
   text-align: center;
 }
+
+.action-button {
+  cursor: pointer;
+
+  &:hover {
+    color: #0077cc;
+  }
+}
